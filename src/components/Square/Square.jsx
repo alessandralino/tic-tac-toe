@@ -2,9 +2,8 @@
 
  const Square = ({ value, onClick }) => {
     const getColor = (value) => {
-      if (value === 'X') return { color: '#FF5733' };  // Laranja para X
-      if (value === 'O') return { color: '#3498DB' };  // Azul para O
-      return { color: 'black' };                      // Cor padrão
+      if (value === 'X') return { color: '#FF5733' };  
+      else return { color: '#3498DB' };                    
     };
   
     return (
