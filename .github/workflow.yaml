@@ -1,58 +1,19 @@
-name: CI / CD Vite React
+name: Continuos Integration
 
-on:
-  push:
-    branches:
-      - '**'
-  pull_request:
-    branches:
-      - '**'
-
-permissions:
-  contents: write
+on: pull_request
 
 jobs:
-  build:
-    name: Build & Lint
+  continuos-integration:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - name: Using Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Build project
-        run: npm run build
-
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'  
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          node-version: 16.
+      - name: run install, build and test
+        run: |
+          npm install
+          npm run build 
+          npm run test
